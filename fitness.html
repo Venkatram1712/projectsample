@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Track - Wellness Platform</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+
+    /* Navbar */
+    .navbar {
+      width: 100%;
+      background: #d62828;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-sizing: border-box;
+    }
+
+    .navbar h2 {
+      margin: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      background: white;
+      color: #d62828;
+    }
+
+    .login-btn {
+      background: white;
+      color: #d62828;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .login-btn:hover {
+      background: #f8f8f8;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 20px;
+    }
+
+    h1 {
+      color: #d62828;
+    }
+
+    /* Fitness gallery */
+    .fitness-gallery {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .fitness-gallery img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #d62828;
+    }
+
+    /* CSS Graph */
+    .graph {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      margin: 0 auto 40px;
+      background: #f0f0f0;
+      border-left: 2px solid #d62828;
+      border-bottom: 2px solid #d62828;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .bar {
+      width: 40px;
+      background: #d62828;
+      text-align: center;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      border-radius: 5px 5px 0 0;
+      font-size: 12px;
+    }
+
+    .labels {
+      display: flex;
+      justify-content: space-between;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    .labels span {
+      width: 40px;
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h2>Wellness</h2>
+    <div class="nav-links">
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="fitness.html">💪 Fitness Track</a>
+      <a href="news.html">📰 News</a>
+      <a href="tools.html">🛠 Tools & Track</a>
+      <a href="mental.html">🧠 Mental Health & Study Tips</a>
+      <a href="community.html">👥 Community & Support</a>
+      <a href="about.html">ℹ️ About Us</a>
+      <a href="login.html" class="login-btn">Login / Signup</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Fitness Track</h1>
+
+    <!-- Fitness images -->
+    <div class="fitness-gallery">
+      <img src="https://i.postimg.cc/xTNJJnPs/sampho1.webp" alt="Workout 1">
+      <img src="https://i.postimg.cc/prhTFJK9/sampho.webp" alt="Workout 2">
+      <img src="https://i.postimg.cc/6Q85Sh1M/sampho2.png" alt="Workout 3">
+    </div>
+
+    <!-- CSS Graph -->
+    <h2 style ="color:#d62828;">Fitness Track<h2>
+    <div class="graph">
+      <div class="bar" style="height:50px;">5k</div>
+      <div class="bar" style="height:70px;">7k</div>
+      <div class="bar" style="height:65px;">6.5k</div>
+      <div class="bar" style="height:80px;">8k</div>
+      <div class="bar" style="height:75px;">7.5k</div>
+      <div class="bar" style="height:90px;">9k</div>
+      <div class="bar" style="height:100px;">10k</div>
+    </div>
+    <div class="labels">
+      <span>Mon</span>
+      <span>Tue</span>
+      <span>Wed</span>
+      <span>Thu</span>
+      <span>Fri</span>
+      <span>Sat</span>
+      <span>Sun</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
