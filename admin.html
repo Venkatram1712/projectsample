@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Wellness Platform</title>
+  <style>
+    body { 
+      margin:0; 
+      font-family: Arial,sans-serif; 
+      background:#f9f9f9; 
+    }
+    
+    .navbar { 
+      width:100%; 
+      background:#d62828; 
+      color:white; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      padding:10px 20px; 
+    }
+    
+    .navbar h2 { 
+      margin:0; 
+    }
+    
+    .nav-links { 
+      display:flex; 
+      gap:15px; 
+    }
+    
+    .nav-links a { 
+      color:white; 
+      text-decoration:none; 
+      font-weight:bold; 
+      padding:8px 12px; 
+      border-radius:5px; 
+    }
+    
+    .nav-links a:hover { 
+      background:white; 
+      color:#d62828; 
+    }
+    
+    .login-btn { 
+      background:white; 
+      color:#d62828; 
+      padding:6px 12px; 
+      border-radius:5px; 
+      font-weight:bold; 
+      text-decoration:none; 
+    }
+    
+    .login-btn:hover { 
+      background:#f8f8f8; 
+    }
+    
+    .main-content { 
+      padding:20px; 
+      max-width:1200px;
+      margin:0 auto;
+    }
+    
+    h1 { 
+      color:#d62828; 
+      text-align:center;
+    }
+    
+    .card { 
+      background:#fff; 
+      padding:20px; 
+      margin-bottom:20px; 
+      border:1px solid #ddd; 
+      border-left:5px solid #d62828; 
+      border-radius:5px; 
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .admin-section {
+      margin-bottom: 30px;
+    }
+    
+    .admin-section h2 {
+      color: #d62828;
+      border-bottom: 2px solid #d62828;
+      padding-bottom: 10px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .stats-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-left: 5px solid #d62828;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #d62828;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    
+    .btn-add {
+      background-color: #d62828;
+      color: white;
+      margin-bottom: 15px;
+    }
+    
+    .btn-edit {
+      background-color: #4CAF50;
+      color: white;
+      margin-right: 5px;
+    }
+    
+    .btn-delete {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    /* CSS-only form toggle */
+    .form-container {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    #show-user-form:checked ~ #user-form,
+    #show-article-form:checked ~ #article-form {
+      display: block;
+    }
+    
+    .show-form-label {
+      display: inline-block;
+      background-color: #d62828;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .close-form-label {
+      display: inline-block;
+      background-color: #f44336;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    /* Simple bar chart styling */
+    .bar-chart {
+      display: flex;
+      height: 200px;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+    
+    .bar {
+      flex: 1;
+      background: #d62828;
+      border-radius: 5px 5px 0 0;
+      position: relative;
+      min-height: 10px;
+    }
+    
+    .bar-label {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      table {
+        font-size: 0.9em;
+      }
+      
+      th, td {
+        padding: 8px;
+      }
+      
+      .stats-container {
+        gap: 10px;
+      }
+      
+      .stat-card {
+        min-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <h2>Wellness Admin</h2>
+  <div class="nav-links">
+    <a href="dashboard.html">🏠 Back to Site</a>
+    <a href="#users">👥 Users</a>
+    <a href="#content">📝 Content</a>
+    <a href="#analytics">📈 Analytics</a>
+    <a href="login.html" class="login-btn">Logout</a>
+  </div>
+</div>
+
+<div class="main-content">
+  <h1>Admin Panel</h1>
+
+  <!-- Quick Stats -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number">1,248</div>
+      <div>Total Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">56</div>
+      <div>Articles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3,892</div>
+      <div>Page Views</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">87%</div>
+      <div>Engagement</div>
+    </div>
+  </div>
+
+  <!-- User Management -->
+  <div class="admin-section" id="users">
+    <h2>👥 User Management</h2>
+    
+    <input type="checkbox" id="show-user-form" style="display: none;">
+    <label for="show-user-form" class="show-form-label">➕ Add New User</label>
+    
+    <div class="form-container" id="user-form">
+      <div class="card">
+        <h3>Add New User</h3>
+        
+        <div class="form-group">
+          <label for="user-name">Name:</label>
+          <input type="text" id="user-name">
+        </div>
+        
+        <div class="form-group">
+          <label for="user-email">Email:</label>
+          <input type="email" id="user-email">
+        </div>
+        
+        <div class="form-group">
+          <label for="user-role">Role:</label>
+          <select id="user-role">
+            <option value="user">User</option>
+            <option value="moderator">Moderator</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        
+        <a href="#" class="btn btn-add">Add User</a>
+        <label for="show-user-form" class="close-form-label">Cancel</label>
+      </div>
+    </div>
+    
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Join Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>001</td>
+        <td>John Smith</td>
+        <td>john@example.com</td>
+        <td>2023-05-15</td>
+        <td>Active</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>Sarah Johnson</td>
+        <td>sarah@example.com</td>
+        <td>2023-06-22</td>
+        <td>Active</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+      <tr>
+        <td>003</td>
+        <td>Mike Davis</td>
+        <td>mike@example.com</td>
+        <td>2023-07-10</td>
+        <td>Inactive</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Content Management -->
+  <div class="admin-section" id="content">
+    <h2>📝 Content Management</h2>
+    
+    <input type="checkbox" id="show-article-form" style="display: none;">
+    <label for="show-article-form" class="show-form-label">➕ Add New Article</label>
+    
+    <div class="form-container" id="article-form">
+      <div class="card">
+        <h3>Add New Article</h3>
+        
+        <div class="form-group">
+          <label for="article-title">Title:</label>
+          <input type="text" id="article-title">
+        </div>
+        
+        <div class="form-group">
+          <label for="article-category">Category:</label>
+          <select id="article-category">
+            <option value="fitness">Fitness</option>
+            <option value="mental">Mental Health</option>
+            <option value="nutrition">Nutrition</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="article-content">Content:</label>
+          <textarea id="article-content" rows="4"></textarea>
+        </div>
+        
+        <a href="#" class="btn btn-add">Add Article</a>
+        <label for="show-article-form" class="close-form-label">Cancel</label>
+      </div>
+    </div>
+    
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Views</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>101</td>
+        <td>10-Minute Morning Yoga to Boost Energy</td>
+        <td>Fitness</td>
+        <td>2023-08-05</td>
+        <td>542</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+      <tr>
+        <td>102</td>
+        <td>How Sleep Impacts Academic Performance</td>
+        <td>Mental Health</td>
+        <td>2023-08-12</td>
+        <td>387</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+      <tr>
+        <td>103</td>
+        <td>5 Healthy Breakfast Ideas for Busy Mornings</td>
+        <td>Nutrition</td>
+        <td>2023-08-18</td>
+        <td>298</td>
+        <td>
+          <a href="#" class="btn btn-edit">Edit</a>
+          <a href="#" class="btn btn-delete">Delete</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Analytics -->
+  <div class="admin-section" id="analytics">
+    <h2>📈 Site Analytics</h2>
+    
+    <div class="card">
+      <h3>📊 Page Views (Last 7 Days)</h3>
+      <div class="bar-chart">
+        <div class="bar" style="height: 75%;"><div class="bar-label">Mon</div></div>
+        <div class="bar" style="height: 60%;"><div class="bar-label">Tue</div></div>
+        <div class="bar" style="height: 90%;"><div class="bar-label">Wed</div></div>
+        <div class="bar" style="height: 45%;"><div class="bar-label">Thu</div></div>
+        <div class="bar" style="height: 80%;"><div class="bar-label">Fri</div></div>
+        <div class="bar" style="height: 70%;"><div class="bar-label">Sat</div></div>
+        <div class="bar" style="height: 55%;"><div class="bar-label">Sun</div></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3>📱 Most Popular Pages</h3>
+      <ul>
+        <li>Dashboard - 1,243 views</li>
+        <li>Fitness Track - 987 views</li>
+        <li>Mental Health - 845 views</li>
+        <li>Nutrition Guide - 723 views</li>
+        <li>Sleep Tracker - 654 views</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

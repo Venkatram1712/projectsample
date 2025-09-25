@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance - Wellness module</title>
+  <style>
+    body { 
+      margin:0; 
+      font-family: Arial,sans-serif; 
+      background:#f9f9f9; 
+    }
+    
+    .navbar { 
+      width:100%; 
+      background:#d62828; 
+      color:white; 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      padding:10px 20px; 
+    }
+    
+    .navbar h2 { 
+      margin:0; 
+    }
+    
+    .nav-links { 
+      display:flex; 
+      gap:15px; 
+    }
+    
+    .nav-links a { 
+      color:white; 
+      text-decoration:none; 
+      font-weight:bold; 
+      padding:8px 12px; 
+      border-radius:5px; 
+    }
+    
+    .nav-links a:hover { 
+      background:white; 
+      color:#d62828; 
+    }
+    
+    .login-btn { 
+      background:white; 
+      color:#d62828; 
+      padding:6px 12px; 
+      border-radius:5px; 
+      font-weight:bold; 
+      text-decoration:none; 
+    }
+    
+    .login-btn:hover { 
+      background:#f8f8f8; 
+    }
+    
+    .main-content { 
+      padding:20px; 
+      max-width:1200px;
+      margin:0 auto;
+    }
+    
+    h1 { 
+      color:#d62828; 
+      text-align:center;
+      margin-bottom:30px;
+    }
+    
+    .card { 
+      background:#fff; 
+      padding:20px; 
+      margin-bottom:20px; 
+      border:1px solid #ddd; 
+      border-left:5px solid #d62828; 
+      border-radius:5px; 
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .tracker-section {
+      margin-bottom: 30px;
+    }
+    
+    .tracker-section h2 {
+      color: #d62828;
+      border-bottom: 2px solid #d62828;
+      padding-bottom: 10px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+    
+    .status-open {
+      background-color: #FFEB3B;
+      color: #333;
+    }
+    
+    .status-in-progress {
+      background-color: #2196F3;
+      color: white;
+    }
+    
+    .status-resolved {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .status-closed {
+      background-color: #9E9E9E;
+      color: white;
+    }
+    
+    .priority-high {
+      color: #f44336;
+      font-weight: bold;
+    }
+    
+    .priority-medium {
+      color: #FF9800;
+      font-weight: bold;
+    }
+    
+    .priority-low {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    
+    .stats-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-left: 5px solid #d62828;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #d62828;
+    }
+    
+    /* CSS-only interactive elements */
+    .ticket-details {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-left: 5px solid #d62828;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    
+    #show-details:checked ~ .ticket-details {
+      display: block;
+    }
+    
+    .show-details-label {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .close-details-label {
+      display: inline-block;
+      background-color: #f44336;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    /* Form styling */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .btn-new {
+      background-color: #d62828;
+      color: white;
+      margin-bottom: 15px;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      table {
+        font-size: 0.9em;
+      }
+      
+      th, td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <h2>Wellness Tracker</h2>
+  <div class="nav-links">
+    <a href="dashboard.html">🏠 Dashboard</a>
+    <a href="tracker.html" class="login-btn">🔧 Maintenance Tracker</a>
+  </div>
+</div>
+
+<div class="main-content">
+  <h1>🔧 Maintenance & Support Tracker</h1>
+
+  <!-- Quick Stats -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number">12</div>
+      <div>Open Tickets</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5</div>
+      <div>In Progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">23</div>
+      <div>Resolved This Month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div>High Priority</div>
+    </div>
+  </div>
+
+  <!-- Active Tickets -->
+  <div class="tracker-section">
+    <h2>📋 Active Maintenance Tickets</h2>
+    
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Created</th>
+      </tr>
+      <tr>
+        <td>#MT-101</td>
+        <td>Fitness graph not displaying correctly</td>
+        <td>Bug Report</td>
+        <td class="priority-high">High</td>
+        <td><span class="status-badge status-in-progress">In Progress</span></td>
+        <td>2023-09-15</td>
+      </tr>
+      <tr>
+        <td>#MT-102</td>
+        <td>Add dark mode option</td>
+        <td>Feature Request</td>
+        <td class="priority-medium">Medium</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>2023-09-12</td>
+      </tr>
+      <tr>
+        <td>#MT-103</td>
+        <td>Update mental health resources</td>
+        <td>Content Update</td>
+        <td class="priority-medium">Medium</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>2023-09-10</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Recently Resolved -->
+  <div class="tracker-section">
+    <h2>✅ Recently Resolved Tickets</h2>
+    
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Resolved Date</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>#MT-098</td>
+        <td>BMI calculator formula error</td>
+        <td>Bug Report</td>
+        <td>2023-09-05</td>
+        <td><span class="status-badge status-resolved">Resolved</span></td>
+      </tr>
+      <tr>
+        <td>#MT-097</td>
+        <td>Add meditation audio files</td>
+        <td>Feature Request</td>
+        <td>2023-09-01</td>
+        <td><span class="status-badge status-resolved">Resolved</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="card">
+    <h3>📞 Contact Support</h3>
+    <p>If you need to report a new issue or follow up on an existing ticket, please contact our support team:</p>
+    <p>Email: <strong>support@wellnesstracker.com</strong></p>
+    <p>Phone: <strong>1-800-WELLNESS</strong></p>
+  </div>
+</div>
+
+</body>
+</html>
